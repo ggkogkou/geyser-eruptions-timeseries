@@ -1,4 +1,4 @@
-function [xM] = EmbedDelays(xV, m, tau);
+function [xM] = embeddelays(xV, m, tau)
 % [xM] = embeddelays(xV, m, tau)
 % EMBEDDELAYS reconstructs delay trajectory from a scalar time series
 % using the embedding method of delays.

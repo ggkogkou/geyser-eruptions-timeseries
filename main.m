@@ -16,7 +16,7 @@ function main()
     geysers_2000 = geysers_2011(278:575);
     geysers_2011 = geysers_2011(893:1190);
 
-    linear_analysis(geysers_1989, length_1989, '1989');
+    linear_analysis(geysers_2000, length_1989, '2000');
 
 
 end

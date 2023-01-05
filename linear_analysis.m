@@ -20,7 +20,7 @@ function linear_analysis(timeseries, N, id)
     if p_value > 0.05
         fprintf("There are strong correlations between observations, it's not white noise. %.3f is significant\n", p_value);
     else
-        fprintf("There are not any strong correlations. The time series is white noise\n");
+        fprintf("There are not any strong correlations. The time series is white noise. %.3f is significant\n", p_value);
     end
 
     % Fit AR(p) model
