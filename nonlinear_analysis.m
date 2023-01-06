@@ -23,8 +23,18 @@ function nonlinear_analysis()
     title('2002 Time Series Segment');
 
     % Statistical independence test (Portmanteau test)
-
-
+    r_t = autocorrelation(timeseries_segment, N_seg);
+    Q = 0;
+    k = N_seg-1;
+    for tau = 1:k
+        Q = Q + (r_t(tau, 2)^2)/(N_seg-tau);  
+    end
+    Q = N_seg*(N_seg+2)*Q;
+    if Q > chi2inv(1-0.05, k)
+        fprintf("There are strong correlations between observations, it's not white noise. Q = %.3f\n", Q);
+    else
+        fprintf("There are not any strong correlations. The time series is white noise. Q = %.3f\n", Q); 
+    end
 
     % Estimation of lag τ parameter by Mutual Information Theorem
     [mutM] = mutualinformation(timeseries, 20, 30, 'Mutual Information Full Time Series 2002', 'c');
