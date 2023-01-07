@@ -1,6 +1,7 @@
 function nonlinear_analysis()
     % Add directories of data and analysis tools
     addpath('labnonlinear/');
+    addpath('lab/');
     addpath('EruptionData/');
 
     % Init timeseries
@@ -45,12 +46,19 @@ function nonlinear_analysis()
     tau = 3;
     m = 4;
     [xM] = embeddelays(timeseries, m, tau);
-    plotd2d3(xM, 'Dispersion Plot')
+    %plotd2d3(xM, 'Dispersion Plot')
 
     % Local Mean Value forecast model
-
+    K = 10;
+    q = 0;     
+    Tmax = 5;
+    [nrmseMM,preMM] = localfitnrmse(timeseries_segment, tau, m, Tmax, K, q, 'Local Mean Value prediction model');
+    
     % Local Linear prediction model
-
+    K = 10;
+    q = m;     
+    Tmax = 5;
+    [nrmseLM,preLM] = localfitnrmse(timeseries_segment, tau, m, Tmax, K, q, 'Local Linear prediction model');
 
 end
 
