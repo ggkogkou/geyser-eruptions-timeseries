@@ -24,36 +24,34 @@ function linear_analysis(timeseries, N, id)
     end
 
     % Fit AR(p) model
-    aic_memory_ar = dictionary(1, 0);
+    aic_memory_ar = zeros();
 
     for p=1 : 30
         [~, ~, ~, ~, aic_memory_ar(p)] = fitARMA(timeseries, p, 0, 1);
     end
 
-    aic_array = values(aic_memory_ar);
     figure(2);
-    plot(aic_array);
+    plot(aic_memory_ar);
 
     % Fit MA(q) model
-    aic_memory_ma = dictionary(1, 0);
+    aic_memory_ma = zeros();
 
     for q=1 : 30
         [~, ~, ~, ~, aic_memory_ma(q)] = fitARMA(timeseries, 0, q, 1);
     end
 
-    aic_array = values(aic_memory_ma);
     figure(3);
-    plot(aic_array);
+    plot(aic_memory_ma);
 
     % Fit ARMA(p,q) model
-    aic_memory_arma = dictionary(1, 0);
+    aic_memory_arma = zeros();
 
     figure(4);
     for q=1 : 7
         for p=1 : 7
             [~, ~, ~, ~, aic_memory_arma(p)] = fitARMA(timeseries, p, q, 1);
         end
-        plot(values(aic_memory_arma));
+        plot(aic_memory_arma);
         q_str{q} = sprintf('q = %d', q);
         legend(q_str);
         hold all;
