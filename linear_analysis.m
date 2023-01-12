@@ -24,7 +24,7 @@ function linear_analysis(timeseries, N, id)
     end
 
     % Fit AR(p) model
-    aic_memory_ar = zeros();
+    aic_memory_ar = NaN();
 
     for p=1 : 30
         [~, ~, ~, ~, aic_memory_ar(p)] = fitARMA(timeseries, p, 0, 1);
@@ -34,7 +34,7 @@ function linear_analysis(timeseries, N, id)
     plot(aic_memory_ar);
 
     % Fit MA(q) model
-    aic_memory_ma = zeros();
+    aic_memory_ma = NaN();
 
     for q=1 : 30
         [~, ~, ~, ~, aic_memory_ma(q)] = fitARMA(timeseries, 0, q, 1);
@@ -44,7 +44,7 @@ function linear_analysis(timeseries, N, id)
     plot(aic_memory_ma);
 
     % Fit ARMA(p,q) model
-    aic_memory_arma = zeros();
+    aic_memory_arma = NaN();
 
     figure(4);
     for q=1 : 7
