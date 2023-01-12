@@ -1,4 +1,4 @@
-function [rcM,cM,rdM,dM,nuM] = correlationdimension(xV,tau,mmax,tittxt,fac,logrmin,logrmax);
+function [rcM,cM,rdM,dM,nuM] = correlationdimension(xV,tau,mmax,tittxt,fac,logrmin,logrmax)
 % [rcM,cM,rdM,dM,nuM] = correlationdimension(xV,tau,mmax,tittxt,fac,logrmin,logrmax);
 % This function computes the correlation dimension for a given time series 
 % 'xV', for a delay 'tau' and a range of embedding dimensions 1,...,mmax. 
@@ -41,14 +41,15 @@ function [rcM,cM,rdM,dM,nuM] = correlationdimension(xV,tau,mmax,tittxt,fac,logrm
 %            column 2 and 3 -> [log(r1),log(r2)] the log of the scaling interval
 %            column 4 -> the estimated correlation dimension 'nu' in [log(r1),log(r2)]
 %            column 5 -> the standard deviation (SD) for 'nu' in [log(r1),log(r2)]
- 
+
 numin = 0.5;
-if nargin<4
+nargin
+if nargin < 4
     tittxt = '';
     fac = 4;
     logrmin = -1000000;
     logrmax = 1000000;
-elseif nargin<5
+elseif nargin < 5
     fac = 4;
     logrmin = -1000000;
     logrmax = 1000000;
@@ -59,7 +60,7 @@ elseif nargin < 7
     logrmax = 1000000;
 end
 save tmp.dat xV -ascii
-eval(['!c:\tisean\d2 tmp.dat -t50 -d',int2str(tau),' -M1,',int2str(mmax),' -N0 -o tmp'])
+system(['d2 tmp.dat -t50 -d', int2str(tau), ' -M1,', int2str(mmax), ' -N0 -o tmp']);
 rcM = NaN*ones(100,mmax);
 rdM = NaN*ones(99,mmax);
 cM = NaN*ones(100,mmax);
@@ -94,27 +95,30 @@ for mi=1:mmax
 end
 fclose(fidc);
 fclose(fidd);
-!del tmp.dat tmp.c2 tmp.d2 tmp.h2 tmp.stat
-figno = gcf;
-figure(figno)
+!rm tmp.dat tmp.c2 tmp.d2 tmp.h2 tmp.stat
+
+figure(1)
 clf
 plot(rcM,log10(cM))
 xlabel('log r')
 ylabel('log C(r)')
 title([tittxt,' correlation integral, \tau=',int2str(tau),' m=1,...,',int2str(mmax)])
-figure(figno+1)
+
+figure(2)
 clf
 plot(rdM,dM)
 xlabel('log r')
 ylabel('slope')
 title([tittxt,' local slope, \tau=',int2str(tau),' m=1,...,',int2str(mmax)])
-figure(figno+2)
+
+figure(3)
 clf
 errorbar([1:mmax]',nuM(:,4),nuM(:,5))
 xlabel('m')
 ylabel('\nu(m)')
 title([tittxt,' estimated correlation dimension, \tau=',int2str(tau)])
-figure(figno+3)
+
+figure(4)
 clf
 plot([1 1],[nuM(1,2) nuM(1,3)])
 hold on

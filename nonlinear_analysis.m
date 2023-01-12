@@ -39,7 +39,7 @@ function nonlinear_analysis()
 
     % Estimation of embedding dimension m using FNN criterion criterion
     for i=1 : length(test_tau_params)
-        fnnM = falsenearest(timeseries, test_tau_params(i), 10, 10, 0, 'FNN for Full Time Series 2022')
+        fnnM = falsenearest(timeseries, test_tau_params(i), 10, 10, 0, 'FNN for Full Time Series 2002')
     end
 
     % Plot dispersion diagram in 2D and 3D. CAUTION: plot2d3d is buggy
@@ -49,16 +49,20 @@ function nonlinear_analysis()
     %plotd2d3(xM, 'Dispersion Plot')
 
     % Local Mean Value forecast model
-    K = 10;
+    K = 50;
     q = 0;     
     Tmax = 5;
-    [nrmseMM,preMM] = localfitnrmse(timeseries_segment, tau, m, Tmax, K, q, 'Local Mean Value prediction model');
+    [nrmseMM, preMM] = localfitnrmse(timeseries, tau, m, Tmax, K, q, 'Local Mean Value prediction model');
     
     % Local Linear prediction model
     K = 10;
     q = m;     
     Tmax = 5;
-    [nrmseLM,preLM] = localfitnrmse(timeseries_segment, tau, m, Tmax, K, q, 'Local Linear prediction model');
+    nlast = 190;
+    [nrmseV, preM, phiV] = linearpredictnrmse(timeseries, m, Tmax, nlast, 'Local Linear Prediction Model');
+
+    % Calculate correlation dimension
+    [rcM,cM,rdM,dM,nuM] = correlationdimension(timeseries, 3, 10, 'C(r)', -15, -0.5, 0.5);
 
 end
 
