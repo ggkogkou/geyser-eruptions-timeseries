@@ -1,4 +1,4 @@
-function nonlinear_analysis()
+function nonlinear_analysis(timeseries, N)
     % Add directories of data and analysis tools
     addpath('labnonlinear/');
     addpath('lab/');
@@ -8,20 +8,10 @@ function nonlinear_analysis()
     timeseries = load("EruptionData/eruption2002.dat");
     N = length(timeseries);
 
-    % random_point = floor((N - 500) * rand())
-
-    % Get a randomly selected segment of initial timeseries
-    timeseries_segment = timeseries(1827:2326);
-    N_seg = 500;
-
     % Plot the timeseries
     figure(1);
     plot(linspace(0, N, N), timeseries);
     title('2002 Full Time Series');
-
-    figure(2);
-    plot(linspace(0, N_seg, N_seg), timeseries_segment);
-    title('2002 Time Series Segment');
 
     % Statistical independence test (Portmanteau test)
     [hV] = portmanteauLB(timeseries_segment , N_seg , 0.05);
@@ -39,7 +29,7 @@ function nonlinear_analysis()
 
     % Estimation of embedding dimension m using FNN criterion criterion
     for i=1 : length(test_tau_params)
-        fnnM = falsenearest(timeseries, test_tau_params(i), 10, 10, 0, 'FNN for Full Time Series 2002')
+        fnnM = falsenearest(timeseries, test_tau_params(i), 10, 10, 0, 'FNN for Full Time Series 2002');
     end
 
     % Plot dispersion diagram in 2D and 3D. CAUTION: plot2d3d is buggy
@@ -65,9 +55,6 @@ function nonlinear_analysis()
     [rcM,cM,rdM,dM,nuM] = correlationdimension(timeseries, 3, 10, 'C(r)', -15, -0.5, 0.5);
 
 end
-
-
-
 
 
 

@@ -58,12 +58,5 @@ function linear_analysis(timeseries, N, id)
         drawnow;
     end
 
-    % Find models parameters for selected p, q
-    [nrmse, phi_paramaeters, theta_parameters, s_z, aic, ~, ~] = fitARMA(timeseries, 1, 1, 1)
-
-    [nrmse, phi_paramaeters, ~, s_z, aic, ~, ~] = fitARMA(timeseries, 2, 0, 1)
-
-    [nrmse, ~, theta_parameters, s_z, aic, ~, ~] = fitARMA(timeseries, 0, 5, 1)
-
 end
 
