@@ -80,9 +80,25 @@ function linear_analysis()
     else
         % Determine models coefficients phi, theta for selected p, q
         % Also predict and check nrmse
-        [nrmse, phi_paramaeters, theta_parameters, s_z, aic, ~, ~] = fitARMA(timeseries, arma_p, arma_q, prediction_steps)
-        [nrmse, phi_paramaeters, ~, s_z, aic, ~, ~] = fitARMA(timeseries, ar_p, 0, prediction_steps)
-        [nrmse, ~, theta_parameters, s_z, aic, ~, ~] = fitARMA(timeseries, 0, ma_q, prediction_steps)
+        [nrmse, phi_parameters, theta_parameters, s_z, ~, ~, ~] = fitARMA(timeseries, arma_p, arma_q, prediction_steps);
+        fprintf("For ARMA(%d, %d) fit:\n", arma_p, arma_q);
+        fprintf("- nrmse = %f\n", nrmse);
+        fprintf("- phi parameters: %f %f\n", phi_parameters);
+        fprintf("- theta parameters: %f\n", theta_parameters);
+        fprintf("- noise standard deviation: %f\n\n", s_z);
+        
+        [nrmse, phi_parameters, ~, s_z, ~, ~, ~] = fitARMA(timeseries, ar_p, 0, prediction_steps);
+        fprintf("For AR(%d) fit:\n", ar_p);
+        fprintf("- nrmse = %f\n", nrmse);
+        fprintf("- phi parameters: %f %f %f\n", phi_parameters);
+        fprintf("- noise standard deviation: %f\n\n", s_z);
+        
+        [nrmse, ~, theta_parameters, s_z, ~, ~, ~] = fitARMA(timeseries, 0, ma_q, prediction_steps);
+        fprintf("For MA(%d) fit:\n", ma_q);
+        fprintf("- nrmse = %f\n", nrmse);
+        fprintf("- theta parameters: %f %f %f %f %f\n", theta_parameters);
+        fprintf("- noise standard deviation: %f\n\n", s_z);
+        
     end
 
 end
