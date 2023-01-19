@@ -1,4 +1,4 @@
-function nonlinear_analysis(timeseries, N)
+function nonlinear_analysis()
     % Add directories of data and analysis tools
     addpath('labnonlinear/');
     addpath('lab/');
@@ -15,11 +15,15 @@ function nonlinear_analysis(timeseries, N)
 
     % operation variable, 1: Find τ and m, 2: Predictions, correlation
     % dimension
-    operation = 1;
+    operation = 2;
 
-    % Estimated τ and m by operation 1 execution
+    % Estimated τ and m by operation 1 execution for the full time series
     tau = 3;
     m = 4;
+    
+    % Estimated τ and m by operation 1 execution for the time series segment
+    %tau = 11;
+    %m = 3;
 
     if operation == 1
         % Plot the timeseries
@@ -36,14 +40,21 @@ function nonlinear_analysis(timeseries, N)
         end
     
         % Estimation of lag τ parameter by Mutual Information Theorem
-        [mutM] = mutualinformation(timeseries, 20, 30, 'Mutual Information Full Time Series 2002', 'c');
+        figure(2);
+        [mutM] = mutualinformation(timeseries, 20, 30, 'Mutual Information Time Series 2002', 'c');
     
-        % By a visual inspection it occurs that 1st local minimum is at lag τ=3 and the 2nd at τ=7
+        % By a visual inspection it occurs that 1st local minimum is at lag
+        % τ=3 and the 2nd at τ=7 for the full timeseries
         test_tau_params = [1 2 3 7];
+        
+        % By a visual inspection it occurs that the local minimums is at lag
+        % τ=2, τ=4 and τ=11 for the segment of the timeseries
+        %test_tau_params = [2 4 11];
     
         % Estimation of embedding dimension m using FNN criterion criterion
         for i=1 : length(test_tau_params)
-            fnnM = falsenearest(timeseries, test_tau_params(i), 10, 10, 0, 'FNN for Full Time Series 2002');
+            figure(2+i);
+            fnnM = falsenearest(timeseries, test_tau_params(i), 10, 10, 0, 'FNN for Time Series 2002');
         end
 
     else
@@ -51,16 +62,27 @@ function nonlinear_analysis(timeseries, N)
         K = 50;
         q = 0;     
         Tmax = 5;
-        [nrmseMM, preMM] = localfitnrmse(timeseries, tau, m, Tmax, K, q, 'Local Mean Value prediction model');
+        figure(1);
+        [~, ~] = localfitnrmse(timeseries, tau, m, Tmax, K, q, 'Local Mean Value prediction model');
         
-        % Local Linear prediction model
-        K = 10;
-        q = m;     
+        % For one step forward
+        [nrmseMM, ~] = localfitnrmse(timeseries, tau, m, 1, K, q);
+        fprintf("For Local Mean Value forecast model and one step prediction: nrmse = %f\n\n", nrmseMM);
+        
+        
+        % Local Linear prediction model    
         Tmax = 5;
         nlast = 190;
-        [nrmseV, preM, phiV] = linearpredictnrmse(timeseries, m, Tmax, nlast, 'Local Linear Prediction Model');
+        figure(2);
+        [~, ~, ~] = linearpredictnrmse(timeseries, m, Tmax, nlast, 'Local Linear Prediction Model');
     
+        % For one step forward
+        [nrmseV, ~] = linearpredictnrmse(timeseries, m, 1, nlast);
+        fprintf("For Local Linear forecast model and one step prediction: nrmse = %f\n\n", nrmseV);
+        
+        
         % Calculate correlation dimension
+        figure(3);
         [rcM,cM,rdM,dM,nuM] = correlationdimension(timeseries, 3, 10, 'C(r)', -15, -0.5, 0.5);
     end
 
