@@ -2,14 +2,13 @@ function nonlinear_analysis()
     % Add directories of data and analysis tools
     addpath('labnonlinear/');
     addpath('lab/');
-    addpath('EruptionData/');
 
     % Init timeseries
     [~, ~, ~, timeseries_2002, timeseries_2002_segment] = load_data();
 
     % Select timeseries to analyze
-    timeseries = timeseries_2002;
-    %timeseries = timeseries_2002_segment;
+    %timeseries = timeseries_2002;
+    timeseries = timeseries_2002_segment;
 
     N = length(timeseries);
 
