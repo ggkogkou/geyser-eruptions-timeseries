@@ -15,14 +15,16 @@ function nonlinear_analysis()
 
     % operation variable, 1: Find τ and m, 2: Predictions, correlation
     % dimension
-    operation = 2;
+    operation = 1;
 
     % Estimated τ and m by operation 1 execution for the full time series
+    % uncomment this for full timeseries
     tau = 3;
     m = 4;
     
     % Estimated τ and m by operation 1 execution for the time series segment
-    %tau = 11;
+    % uncomment this for timeseries segment
+    %tau = 4;
     %m = 3;
 
     if operation == 1
@@ -45,11 +47,11 @@ function nonlinear_analysis()
     
         % By a visual inspection it occurs that 1st local minimum is at lag
         % τ=3 and the 2nd at τ=7 for the full timeseries
-        test_tau_params = [1 2 3 7];
+        test_tau_params = [1 2 3 7]; % uncomment this for full timeseries
         
         % By a visual inspection it occurs that the local minimums is at lag
         % τ=2, τ=4 and τ=11 for the segment of the timeseries
-        %test_tau_params = [2 4 11];
+        %test_tau_params = [2 4 11]; % uncomment this for timeseries seg
     
         % Estimation of embedding dimension m using FNN criterion criterion
         for i=1 : length(test_tau_params)
