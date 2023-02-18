@@ -12,7 +12,7 @@ function linear_analysis()
     %timeseries = timeseries_2011;
 
     % operation variable, 1: Fit model, 2: Parameter estimation
-    operation = 1;
+    operation = 2;
 
     % Parameters for operation 2 (the following where found after model fit)
     arma_p = 1;
