@@ -60,5 +60,5 @@ Contributions are welcome! If you would like to contribute to this project, plea
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0. See the [LICENSE](https://www.gnu.org/licenses/gpl-3.0.en.html) file for more information.
+This project is licensed under the GNU General Public License v3.0. See the [LICENSE](LICENSE) file for more information.
 
