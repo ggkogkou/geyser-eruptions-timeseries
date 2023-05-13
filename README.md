@@ -58,6 +58,8 @@ Contributions are welcome! If you would like to contribute to this project, plea
 4.  Push your changes to your forked repository.
 5.  Submit a pull request to the `main` branch of the original repository.
 
+For further info about contributing to the project, check out [CONTRIBUTING](CONTRIBUTING.md) guide.
+
 ## License
 
 This project is licensed under the GNU General Public License v3.0. See the [LICENSE](LICENSE) file for more information.
